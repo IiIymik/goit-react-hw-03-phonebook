@@ -10,17 +10,17 @@ export default class Form extends Component {
     }
     state = {
     name: '',
-    number: ''   
+    number: ''
     }
 
       handleSubmit = (e) => {
         e.preventDefault()
         const { name, number } = this.state;
         const { data } = this.props;
-          const obj = {
+        const obj = {
+            id: nanoid(),
                     name,
                     number,
-                    id: nanoid(),
         };
         const compare = this.checkContact(data, obj)
         if (compare) {
@@ -28,7 +28,7 @@ export default class Form extends Component {
           return this.reset();
         }
           this.props.onSubmit(obj);
-          this.reset(); 
+          this.reset();
   }
 
   checkContact = (contacts, obj) => {
@@ -36,11 +36,11 @@ export default class Form extends Component {
     const normalizedName = name.toLowerCase();
      return contacts.find(contact => contact.name.toLowerCase().includes(normalizedName))
     }
-    
+
     reset = () => {
         this.setState( {
     name: '',
-    number: ''   
+    number: ''
     })
     }
 
@@ -48,12 +48,12 @@ export default class Form extends Component {
             const { name, value } = e.currentTarget;
             this.setState({[name]: value,})
     }
-    
+
     render() {
         const { name, number } = this.state;
         return (
              <FormEl onSubmit={this.handleSubmit}>
-             <TitleInput>Name</TitleInput> 
+             <TitleInput>Name</TitleInput>
             <Input
              type="text"
              name="name"
@@ -61,10 +61,10 @@ export default class Form extends Component {
              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
              onChange={this.handleChange}
              title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-             required       
+             required
            />
            <TitleInput>Number</TitleInput>
-           <Input 
+           <Input
              type="tel"
              name="number"
              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
